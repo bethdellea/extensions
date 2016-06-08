@@ -1,14 +1,23 @@
 body{
+    width: 400px;
+    height: 450px;
     background: -webkit-linear-gradient(left, rgba(110,103,204,.6) , rgba(163,209,255,.6)); /* For Safari 5.1 to 6.0 */
     background: -o-linear-gradient(right, rgba(110,103,204,.6),rgba(163,209,255,.6)); /* For Opera 11.1 to 12.0 */
     background: -moz-linear-gradient(right, rgba(110,103,204,.6),rgba(163,209,255,.6)); /* For Firefox 3.6 to 15 */
     background: linear-gradient(to right, rgba(110,103,204,.6) ,rgba(163,209,255,.6)); /* Standard syntax */
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 100%;
+    
+    
 }
 
 .content{
     padding: 1em;
 }
 
+html{
+    width: 400px;
+    height: 450px;
+}
+
+a{
+    color: rgb(80, 60, 160) !important;
+}
