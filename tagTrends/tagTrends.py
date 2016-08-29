@@ -103,7 +103,7 @@ def tagsNoFreq(topTags):
     tagsList = []
     for tag in topTags:
         tagsList.append(tag[1])
-    print(tagsList)
+    return tagsList
     
 
 def main():
@@ -121,6 +121,13 @@ def main():
     newOrder = sorted([(value,key) for (key,value) in tagsUsed.items()], reverse=True)   #http://stackoverflow.com/questions/613183/sort-a-python-dictionary-by-value
     tops = topTags(newOrder)
     printable = tagsNoFreq(tops)
+    print(pseud, "'s ", len(printable), " Most Frequently Used Tags: ")
+    tagpile = ""
+    for tag in printable:
+        tagpile += tag
+        tagpile += ", "
+    tagpile = tagpile[:len(tagpile)-2]
+    print(tagpile)
 
 
 
