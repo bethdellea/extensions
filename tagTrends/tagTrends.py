@@ -89,6 +89,23 @@ def tagDict(tagsList):
             tagDict[tag] = tagDict[tag] + 1
     return tagDict
 
+def topTags(sortedDict):
+    if len(sortedDict) < 15:
+        #work with what's been given
+        topTags = sortedDict
+    else:
+        #grab the top 15 most used tags for an author
+        topTags = sortedDict[0:14]
+    return topTags
+
+def tagsNoFreq(topTags):
+    
+    tagsList = []
+    for tag in topTags:
+        tagsList.append(tag[1])
+    print(tagsList)
+    
+
 def main():
     uname = input("Enter the username to check: ")
     pseud = input("Enter the pseudonym to check: ")
@@ -102,14 +119,8 @@ def main():
 
     tagsUsed = tagDict(freeformTags)
     newOrder = sorted([(value,key) for (key,value) in tagsUsed.items()], reverse=True)   #http://stackoverflow.com/questions/613183/sort-a-python-dictionary-by-value
-    topFifteen = newOrder[0:14]
-    print(topFifteen)
-    
-
-
-
-
-
+    tops = topTags(newOrder)
+    printable = tagsNoFreq(tops)
 
 
 
