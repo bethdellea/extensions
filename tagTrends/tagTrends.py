@@ -23,7 +23,7 @@ class HTTPResponseError(Exception):
     def __str__(self):
         return repr(self.value)
 
-def getTagText(tag):
+def getTagTextAO3(tag):
     if tag is None:
         return ""
     tagStr = str(tag)
@@ -55,7 +55,7 @@ def getPageAO3(uname, pseud, pNum):
 
 '''requests and catches the desired profile page on instagram'''
 def getPageInsta(uname):
-    profileURL = "https:www.instagram.com/" + uname + "/"
+    profileURL = "https://www.instagram.com/" + uname + "/"
     rget = requests.get(profileURL, headers=DEFINITELY_CHROME)
     return(rget.text)
 
@@ -82,7 +82,7 @@ def justTagsAO3(workPg):
     freeform = pgSoup.find_all("li", "freeforms")
     onlyTags = []
     for tag in freeform:
-        onlyTags.append(getTagText(tag))
+        onlyTags.append(getTagTextAO3(tag))
     return onlyTags
 
 '''makes a dictionary of tags used and the number of times each has been used'''
@@ -98,6 +98,8 @@ def tagDict(tagsList):
             tagDict[tag] = tagDict[tag] + 1
     return tagDict
 
+'''grab the topNum most frequently used tags or all the tags that qualify,
+if topNum is too high'''
 def topTags(sortedDict, topNum):
     if len(sortedDict) < topNum:
         #work with what's been given
@@ -107,16 +109,24 @@ def topTags(sortedDict, topNum):
         topTags = sortedDict[0:topNum-1]
     return topTags
 
+'''we have a tuple of frequency and tag. We return just the tag'''
 def tagsNoFreq(topTags):
     tagsList = []
     for tag in topTags:
         tagsList.append(tag[1])
     return tagsList
 
+'''uses the instagram tag search base url'''
 def makeTagLinkInsta(tag):
     baseURL = "https://www.instagram.com/explore/tags/"
     return baseURL + tag
 
+'''for the #aesthetic on instagram''' 
+def makeTagHashtag(tag):
+    hashtag="#" + tag
+    return hashtag
+
+'''uses the ao3 tag search base url'''
 def makeTagLinkAO3(tag):
     baseURL = "http://archiveofourown.org/tags/"
     tagNoSp = tag.split()
@@ -125,6 +135,11 @@ def makeTagLinkAO3(tag):
         fullURL += tagNoSp[i] + "%20"
     fullURL += tagNoSp[len(tagNoSp)-1] + "/works"
     return fullURL
+
+'''takes a tag's text and its url and makes a functional href link out of it'''
+def makeLiveLink(tag, url):
+    linkCode = "<a href='" + url + "' target='_blank'>" + tag + "</a>"
+    return linkCode
 
 def printPretty(pseud, tagList):
     if len(tagList) > 0:
@@ -156,13 +171,16 @@ def main():
         topNum = 5
         uname = input("Enter the username to check: ")
         picPage = getPageInsta(uname)
+        f = open("instaTest.html", "w", errors="replace")
+        f.write(picPage)
+        f.close()
 
     tagsUsed = tagDict(freeformTags)
     newOrder = sorted([(value,key) for (key,value) in tagsUsed.items()], reverse=True)   #http://stackoverflow.com/questions/613183/sort-a-python-dictionary-by-value
     tops = topTags(newOrder, topNum)
     printable = tagsNoFreq(tops)
     printPretty(pseud, printable)
-    print(makeTagLinkAO3(printable[1]))
+    
 
 
 
