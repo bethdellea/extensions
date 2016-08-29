@@ -2,7 +2,7 @@
 # August 2016
 # collect and sort the tags frequently used by an account to show (recent) trends
 # Version 1 to work with AO3 because they mark their tags nicely
-
+# Currently breaks if a nonexistant username is entered. In full extension form this should not be an issue
 import requests
 import http.cookiejar
 from bs4 import BeautifulSoup
@@ -40,7 +40,10 @@ def getNumFromWorks(h2):
     soup = BeautifulSoup(hStr, "html.parser")
     text = soup.get_text()
     textList = text.split()
-    numWorks = int(textList[-4])
+    if len(textList) == 4:
+        numWorks = int(textList[0])
+    else:
+        numWorks = int(textList[-4])
     return numWorks
     
 '''requests and catches the desired user works page on ao3'''
@@ -55,11 +58,11 @@ takes the number of works and then figures out the number of pages based on 20 w
 def getNumWorksPages(worksPg):
     pgSoup = BeautifulSoup(worksPg, "html.parser")
     worksBody = pgSoup.find("div",  {"id": "main"})
-    if worksBody is None: #if you can't find the number of works, there is only one page
-        return 1
     worksHead = worksBody.find("h2", "heading")
     numWorks = getNumFromWorks(worksHead)
-    if numWorks <= 20: #ao3 displays 20 works per page, will not say number of works if only one page is necessary
+    if numWorks == 0:
+        return 0
+    elif numWorks <= 20: #ao3 displays 20 works per page, will not say number of works if only one page is necessary
         return 1
     numWorksPages = math.ceil(numWorks/20) #if 20 works/page, any extras will be on the next one
 
@@ -99,11 +102,23 @@ def topTags(sortedDict):
     return topTags
 
 def tagsNoFreq(topTags):
-    
     tagsList = []
     for tag in topTags:
         tagsList.append(tag[1])
     return tagsList
+
+
+def printPretty(pseud, tagList):
+    if len(tagList) > 0:
+        print(pseud, "'s ", len(tagList), " Most Frequently Used Tags: ")
+        tagpile = ""
+        for tag in tagList:
+            tagpile += tag
+            tagpile += ", "
+        tagpile = tagpile[:len(tagpile)-2]
+        print(tagpile)
+    else:
+        print(pseud, " has no tags to show")
     
 
 def main():
@@ -121,13 +136,7 @@ def main():
     newOrder = sorted([(value,key) for (key,value) in tagsUsed.items()], reverse=True)   #http://stackoverflow.com/questions/613183/sort-a-python-dictionary-by-value
     tops = topTags(newOrder)
     printable = tagsNoFreq(tops)
-    print(pseud, "'s ", len(printable), " Most Frequently Used Tags: ")
-    tagpile = ""
-    for tag in printable:
-        tagpile += tag
-        tagpile += ", "
-    tagpile = tagpile[:len(tagpile)-2]
-    print(tagpile)
+    printPretty(pseud, printable)
 
 
 
