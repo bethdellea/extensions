@@ -98,13 +98,13 @@ def tagDict(tagsList):
             tagDict[tag] = tagDict[tag] + 1
     return tagDict
 
-def topTags(sortedDict):
-    if len(sortedDict) < 15:
+def topTags(sortedDict, topNum):
+    if len(sortedDict) < topNum:
         #work with what's been given
         topTags = sortedDict
     else:
         #grab the top 15 most used tags for an author
-        topTags = sortedDict[0:14]
+        topTags = sortedDict[0:topNum-1]
     return topTags
 
 def tagsNoFreq(topTags):
@@ -142,6 +142,7 @@ def printPretty(pseud, tagList):
 def main():
     src = input("Would you like to work with AO3 or instagram? ")
     if src == "AO3":
+        topNum = 15
         uname = input("Enter the username to check: ")
         pseud = input("Enter the pseudonym to check: ")
         workPg = getPageAO3(uname, pseud, 1)
@@ -152,12 +153,13 @@ def main():
                 currPg = getPage(uname, pseud, pNum)
                 freeformTags += justTagsAO3(currPg)
     elif src == "instagram":
+        topNum = 5
         uname = input("Enter the username to check: ")
         picPage = getPageInsta(uname)
 
     tagsUsed = tagDict(freeformTags)
     newOrder = sorted([(value,key) for (key,value) in tagsUsed.items()], reverse=True)   #http://stackoverflow.com/questions/613183/sort-a-python-dictionary-by-value
-    tops = topTags(newOrder)
+    tops = topTags(newOrder, topNum)
     printable = tagsNoFreq(tops)
     printPretty(pseud, printable)
     print(makeTagLinkAO3(printable[1]))
