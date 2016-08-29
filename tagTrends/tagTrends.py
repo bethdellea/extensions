@@ -40,6 +40,7 @@ def getNumFromWorks(h2):
     soup = BeautifulSoup(hStr, "html.parser")
     text = soup.get_text()
     textList = text.split()
+    #print(textList)
     if len(textList) == 4:
         numWorks = int(textList[0])
     else:
@@ -122,7 +123,7 @@ def topTags(sortedDict, topNum):
         topTags = sortedDict
     else:
         #grab the top 15 most used tags for an author
-        topTags = sortedDict[0:topNum-1]
+        topTags = sortedDict[0:topNum]
     return topTags
 
 '''we have a tuple of frequency and tag. We return just the tag'''
@@ -185,7 +186,7 @@ def main():
         freeformTags = justTagsAO3(workPg)
         if numPgs > 1:
             for pNum in range(2, numPgs+1):
-                currPg = getPage(uname, pseud, pNum)
+                currPg = getPageAO3(uname, pseud, pNum)
                 freeformTags += justTagsAO3(currPg)
     elif src == "instagram":
         topNum = 5
