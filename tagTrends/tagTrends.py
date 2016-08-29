@@ -47,9 +47,15 @@ def getNumFromWorks(h2):
     return numWorks
     
 '''requests and catches the desired user works page on ao3'''
-def getPage(uname, pseud, pNum):
+def getPageAO3(uname, pseud, pNum):
     #http://archiveofourown.org/users/uname/pseuds/pseud/works?page=pNum
     profileURL = "http://archiveofourown.org/users/"+uname+"/pseuds/"+pseud+"/works?page="+str(pNum)
+    rget = requests.get(profileURL, headers=DEFINITELY_CHROME)
+    return(rget.text)
+
+'''requests and catches the desired profile page on instagram'''
+def getPageInsta(uname):
+    profileURL = "https:www.instagram.com/" + uname + "/"
     rget = requests.get(profileURL, headers=DEFINITELY_CHROME)
     return(rget.text)
 
@@ -69,7 +75,7 @@ def getNumWorksPages(worksPg):
     return numWorksPages
 
 '''gets the freeform tags from a page and discards the rest of the html'''
-def justTags(workPg):
+def justTagsAO3(workPg):
     #cut the text down to just the works section, perhaps just the tags for each
     #tbd based on effort for later things tbh
     pgSoup = BeautifulSoup(workPg, "html.parser")
@@ -107,6 +113,18 @@ def tagsNoFreq(topTags):
         tagsList.append(tag[1])
     return tagsList
 
+def makeTagLinkInsta(tag):
+    baseURL = "https://www.instagram.com/explore/tags/"
+    return baseURL + tag
+
+def makeTagLinkAO3(tag):
+    baseURL = "http://archiveofourown.org/tags/"
+    tagNoSp = tag.split()
+    fullURL = baseURL
+    for i in range(0, len(tagNoSp)-1):
+        fullURL += tagNoSp[i] + "%20"
+    fullURL += tagNoSp[len(tagNoSp)-1] + "/works"
+    return fullURL
 
 def printPretty(pseud, tagList):
     if len(tagList) > 0:
@@ -122,21 +140,27 @@ def printPretty(pseud, tagList):
     
 
 def main():
-    uname = input("Enter the username to check: ")
-    pseud = input("Enter the pseudonym to check: ")
-    workPg = getPage(uname, pseud, 1)
-    numPgs = getNumWorksPages(workPg)
-    freeformTags = justTags(workPg)
-    if numPgs > 1:
-        for pNum in range(2, numPgs+1):
-            currPg = getPage(uname, pseud, pNum)
-            freeformTags += justTags(currPg)
+    src = input("Would you like to work with AO3 or instagram? ")
+    if src == "AO3":
+        uname = input("Enter the username to check: ")
+        pseud = input("Enter the pseudonym to check: ")
+        workPg = getPageAO3(uname, pseud, 1)
+        numPgs = getNumWorksPages(workPg)
+        freeformTags = justTagsAO3(workPg)
+        if numPgs > 1:
+            for pNum in range(2, numPgs+1):
+                currPg = getPage(uname, pseud, pNum)
+                freeformTags += justTagsAO3(currPg)
+    elif src == "instagram":
+        uname = input("Enter the username to check: ")
+        picPage = getPageInsta(uname)
 
     tagsUsed = tagDict(freeformTags)
     newOrder = sorted([(value,key) for (key,value) in tagsUsed.items()], reverse=True)   #http://stackoverflow.com/questions/613183/sort-a-python-dictionary-by-value
     tops = topTags(newOrder)
     printable = tagsNoFreq(tops)
     printPretty(pseud, printable)
+    print(makeTagLinkAO3(printable[1]))
 
 
 
