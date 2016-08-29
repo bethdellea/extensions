@@ -85,6 +85,22 @@ def justTagsAO3(workPg):
         onlyTags.append(getTagTextAO3(tag))
     return onlyTags
 
+'''gets the hashtags used in most recent post captions from the instagram caption'''
+def justTagsInst(profPg):
+    regx = re.compile('(?<="caption":).*?(?=, "likes":)')
+    captionList = regx.findall(profPg) #will return a list! ;)
+    tagList = []
+    for caption in captionList:
+        captWords = caption.split()
+        for word in captWords:
+            if word[0] == "#":
+                word = word[1:]
+                tagList.append(word)
+    return tagList
+
+
+
+
 '''makes a dictionary of tags used and the number of times each has been used'''
 def tagDict(tagsList):
     #make a dictionary of each tag and number of times used
@@ -110,10 +126,13 @@ def topTags(sortedDict, topNum):
     return topTags
 
 '''we have a tuple of frequency and tag. We return just the tag'''
-def tagsNoFreq(topTags):
+def tagsNoFreq(topTags, src):
     tagsList = []
     for tag in topTags:
-        tagsList.append(tag[1])
+        currTag = tag[1]
+        if src == "instagram":
+            currTag = makeTagHashtag(currTag)
+        tagsList.append(currTag)
     return tagsList
 
 '''uses the instagram tag search base url'''
@@ -156,6 +175,7 @@ def printPretty(pseud, tagList):
 
 def main():
     src = input("Would you like to work with AO3 or instagram? ")
+    pseud = ""
     if src == "AO3":
         topNum = 15
         uname = input("Enter the username to check: ")
@@ -170,23 +190,17 @@ def main():
     elif src == "instagram":
         topNum = 5
         uname = input("Enter the username to check: ")
+        pseud = uname
         picPage = getPageInsta(uname)
-        f = open("instaTest.html", "w", errors="replace")
-        f.write(picPage)
-        f.close()
+        freeformTags = justTagsInst(picPage)
 
     tagsUsed = tagDict(freeformTags)
     newOrder = sorted([(value,key) for (key,value) in tagsUsed.items()], reverse=True)   #http://stackoverflow.com/questions/613183/sort-a-python-dictionary-by-value
     tops = topTags(newOrder, topNum)
-    printable = tagsNoFreq(tops)
+    #topTags needs an answer for if they're all used only once
+    printable = tagsNoFreq(tops, src)
     printPretty(pseud, printable)
     
-
-
-
-
-
-
 
 
 
@@ -197,3 +211,5 @@ main()
 
 
     
+
+
