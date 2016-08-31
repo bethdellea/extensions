@@ -60,6 +60,33 @@ def getPageInsta(uname):
     rget = requests.get(profileURL, headers=DEFINITELY_CHROME)
     return(rget.text)
 
+'''requests and catches the desired photo page on instagram'''
+def getPicPg(photoCode):
+    profileURL = "https://www.instagram.com/p/" + photoCode + "/"
+    rget = requests.get(profileURL, headers=DEFINITELY_CHROME)
+    return(rget.text)
+
+'''Users have been putting their hashtags as comments a lot these days instead of in captions. Let's go to each picture and get them'''
+def getPicIDS(page):
+    #doesn't work on private accounts but individual photos are visible
+    #can get pic ids in js and pass to the python program for further analysis!
+    regx = re.compile('(?<="code": ").*?(?=", "date":)')
+    picIDList = regx.findall(page) #will return a list! ;)
+    return picIDList
+
+'''returns a list of all hashtags used in photo comments by the user'''
+def getCommentTags(page):
+    picIDs = getPicIDS(page)
+    tagList = []
+    print(picIDs)
+    for pic in picIDs:
+        picPg = getPicPg(pic)
+        regx = re.compile('(?<="text": ").*?(?=", "created_at":)')
+        picComment = regx.findall(picPg) #will return a list! ;)
+        for comment in picComment:
+            tagList += getTagFromText(comment)
+    return tagList
+
 '''isolates the number of pages of works for the user
 takes the number of works and then figures out the number of pages based on 20 works/page'''
 def getNumWorksPages(worksPg):
@@ -72,8 +99,8 @@ def getNumWorksPages(worksPg):
     elif numWorks <= 20: #ao3 displays 20 works per page, will not say number of works if only one page is necessary
         return 1
     numWorksPages = math.ceil(numWorks/20) #if 20 works/page, any extras will be on the next one
-
     return numWorksPages
+
 
 '''gets the freeform tags from a page and discards the rest of the html'''
 def justTagsAO3(workPg):
@@ -86,21 +113,25 @@ def justTagsAO3(workPg):
         onlyTags.append(getTagTextAO3(tag))
     return onlyTags
 
+
 '''gets the hashtags used in most recent post captions from the instagram caption'''
 def justTagsInst(profPg):
     regx = re.compile('(?<="caption":).*?(?=, "likes":)')
     captionList = regx.findall(profPg) #will return a list! ;)
     tagList = []
     for caption in captionList:
-        captWords = caption.split()
-        for word in captWords:
-            if word[0] == "#":
-                word = word[1:]
-                tagList.append(word)
+        tagList += getTagFromText(caption)
     return tagList
 
-
-
+'''isolate the hashtags, minus symbol, used in bodies of text'''
+def getTagFromText(text):
+    textWds = text.split()
+    tagList = []
+    for word in textWds:
+        if word[0] == "#":
+            word = word[1:]
+            tagList.append(word)
+    return tagList
 
 '''makes a dictionary of tags used and the number of times each has been used'''
 def tagDict(tagsList):
@@ -193,7 +224,9 @@ def main():
         uname = input("Enter the username to check: ")
         pseud = uname
         picPage = getPageInsta(uname)
+        commentTags = getCommentTags(picPage)
         freeformTags = justTagsInst(picPage)
+        freeformTags = commentTags + freeformTags #should re-name this variable later
 
     tagsUsed = tagDict(freeformTags)
     newOrder = sorted([(value,key) for (key,value) in tagsUsed.items()], reverse=True)   #http://stackoverflow.com/questions/613183/sort-a-python-dictionary-by-value
