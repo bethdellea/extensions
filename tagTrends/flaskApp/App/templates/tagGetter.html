@@ -23,7 +23,7 @@
     <p><input type="submit" value="Get Tags"></p>
     <p id="tagResults">
         {% for part in tagResponse %}
-            {{part|safe}}
+        <span> {{part|safe}} </span>
         {% endfor %}
            </p>
 

@@ -223,10 +223,10 @@ def printPretty(pseud, tagList, src):
                 link = makeLiveLink(tag, linkTxt)
             else:
                 linkTxt = makeTagLinkAO3(tag)
-                link = makeLiveLink(tag, linkTxt)
+                link = makeLiveLink(tag, linkTxt) + ", "
             tagpile.append(link)
-            tagpile.append(", ")
-        tagpile = tagpile[:len(tagpile)-1] #take off that last comma space
+            #tagpile.append(", ")
+        tagpile[len(tagpile)-1] = tagpile[len(tagpile) - 1][:-2] #take off that last comma space
         willPrint += tagpile
         return willPrint
     else:

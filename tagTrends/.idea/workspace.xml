@@ -48,11 +48,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tagTrends.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="tagTrends.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tagTrends.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="226" column="32" selection-start-line="226" selection-start-column="32" selection-end-line="226" selection-end-column="32" />
+            <state relative-caret-position="200">
+              <caret line="228" column="63" selection-start-line="228" selection-start-column="63" selection-end-line="228" selection-end-column="63" />
               <folding />
             </state>
           </provider>
@@ -70,11 +70,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tagGetter.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="tagGetter.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/flaskApp/App/templates/tagGetter.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="271">
-              <caret line="26" column="19" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
+            <state relative-caret-position="254">
+              <caret line="25" column="36" selection-start-line="25" selection-start-column="36" selection-end-line="25" selection-end-column="36" />
               <folding>
                 <element signature="n#style#0;n#span#0;n#p#1;n#form#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#1;n#p#1;n#form#0;n#!!top" expanded="true" />
@@ -130,8 +130,8 @@
         <option value="$PROJECT_DIR$/flaskApp/App/templates/index.html" />
         <option value="$PROJECT_DIR$/flaskApp/App/forms.py" />
         <option value="$PROJECT_DIR$/flaskApp/App/views.py" />
-        <option value="$PROJECT_DIR$/tagTrends.py" />
         <option value="$PROJECT_DIR$/flaskApp/App/templates/tagGetter.html" />
+        <option value="$PROJECT_DIR$/tagTrends.py" />
       </list>
     </option>
   </component>
@@ -668,22 +668,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tagTrends.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="226" column="32" selection-start-line="226" selection-start-column="32" selection-end-line="226" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/flaskApp/App/templates/tagGetter.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="26" column="19" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
+        <state relative-caret-position="254">
+          <caret line="25" column="36" selection-start-line="25" selection-start-column="36" selection-end-line="25" selection-end-column="36" />
           <folding>
             <element signature="n#style#0;n#span#0;n#p#1;n#form#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#1;n#p#1;n#form#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tagTrends.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="228" column="63" selection-start-line="228" selection-start-column="63" selection-end-line="228" selection-end-column="63" />
+          <folding />
         </state>
       </provider>
     </entry>
