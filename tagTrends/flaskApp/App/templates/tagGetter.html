@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Tag Games</h1>
+<form action="" method="post" name="login">
+    {{form.hidden_tag()}}
+    <p>
+        Source:<br>
+        {{form.src}}Instagram?<br>
+    </p>
+    <p>User Name:<br>
+        {{form.uname}}<br>
+    Pseud (If none, use User Name):<br>
+    {{form.pseud}}<br>
+    {% for error in form.uname.errors %}
+        <span class="errorMsg" style="color:red;">[{{error}}</span>
+        {% endfor %}
+        {% for error in form.pseud.errors %}
+        <span class="errorMsg" style="color:red;">[{{error}}</span>
+        {% endfor %}<br>
+    </p>
+    <p>Picture Codes?:<br>
+    {{form.picCodes}}</p>
+    <p><input type="submit" value="Get Tags"></p>
+
+</form>
+{% endblock %}
