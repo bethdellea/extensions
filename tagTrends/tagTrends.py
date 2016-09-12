@@ -74,6 +74,22 @@ def getPicIDS(page):
     picIDList = regx.findall(page) #will return a list! ;)
     return picIDList
 
+'''get all tags from a picture page'''
+def getPicTags(picIDs):
+    tagList = []
+    for pic in picIDs:
+        picPg = getPicPg(pic)
+        regx = re.compile('(?<="text": ").*?(?=", "created_at":)')
+        picComment = regx.findall(picPg)  # will return a list! ;)
+        for comment in picComment:
+            tagList += getTagFromText(comment)
+        regx = re.compile('(?<="caption":).*?(?=, "likes":)')
+        captionList = regx.findall(picPg)
+        for caption in captionList:
+            tagList += getTagFromText(caption)
+    return tagList
+
+
 '''returns a list of all hashtags used in photo comments by the user'''
 def getCommentTags(page):
     picIDs = getPicIDS(page)
@@ -130,6 +146,8 @@ def getTagFromText(text):
     for word in textWds:
         if word[0] == "#":
             word = word[1:]
+            if word[len(word) - 1] in "\"\'!,.<>/@$%^&*()_-+=":
+                word = word[:-1]
             tagList.append(word)
     return tagList
 
@@ -221,11 +239,8 @@ def startProcess(src, uname, pseud, picCodes):
                 freeformTags += justTagsAO3(currPg)
     else:
         topNum = 5
-        picPage = getPageInsta(uname)
-        commentTags = getCommentTags(picPage)
-        #use picCodes to shortcut here!!!!!
-        freeformTags = justTagsInst(picPage)
-        freeformTags = commentTags + freeformTags  # should re-name this variable later
+        picCodes = picCodes.split(",")
+        freeformTags = getPicTags(picCodes)
 
     tagsUsed = tagDict(freeformTags)
     newOrder = sorted([(value, key) for (key, value) in tagsUsed.items()],
