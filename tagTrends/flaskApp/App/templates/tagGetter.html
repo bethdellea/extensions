@@ -12,18 +12,19 @@
     Pseud (If none, use User Name):<br>
     {{form.pseud}}<br>
     {% for error in form.uname.errors %}
-        <span class="errorMsg" style="color:red;">[{{error}}</span>
+        <span class="errorMsg" style="color:red;">{{error}}</span>
         {% endfor %}
         {% for error in form.pseud.errors %}
-        <span class="errorMsg" style="color:red;">[{{error}}</span>
+        <span class="errorMsg" style="color:red;">{{error}}</span>
         {% endfor %}<br>
     </p>
     <p>Picture Codes?:<br>
     {{form.picCodes}}</p>
     <p><input type="submit" value="Get Tags"></p>
     <p id="tagResults">
-
-        {{tagResponse}}
+        {% for response in tagResponse %}
+        {{response}}
+        {% endfor %}
     </p>
 
 </form>

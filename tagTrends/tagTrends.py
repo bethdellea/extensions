@@ -210,18 +210,26 @@ def makeLiveLink(tag, url):
     linkCode = "<a href='" + url + "' target='_blank'>" + tag + "</a>"
     return linkCode
 
-def printPretty(pseud, tagList):
+def printPretty(pseud, tagList, src):
     if len(tagList) > 0:
-        toPrint = pseud + "'s " + len(tagList) + " Most Frequently Used Tags:"
-        print(pseud, "'s ", len(tagList), " Most Frequently Used Tags: ")
+        toPrint = pseud + "'s " + str(len(tagList)) + " Most Frequently Used Tags: <br>"
+        willPrint=[toPrint]
+        #print(pseud, "'s ", str(len(tagList)), " Most Frequently Used Tags: ")
         tagpile = ""
         for tag in tagList:
-            tagpile += tag
+            if src:
+                linkTxt = makeTagLinkInsta(tag)
+                tag = makeTagHashtag(tag)
+                link = makeLiveLink(tag, linkTxt)
+            else:
+                linkTxt = makeTagLinkAO3(tag)
+                link = makeLiveLink(tag, linkTxt)
+            tagpile += link
             tagpile += ", "
-        tagpile = tagpile[:len(tagpile)-2]
-        toPrint += "\n" + tagpile
+        tagpile = tagpile[:len(tagpile)-2] #don't remember why the -2 anymore. (shrug dude)
+        willPrint += tagpile
         print(tagpile)
-        return toPrint
+        return willPrint
     else:
         toPrint = pseud + " has no tags to show"
         print(pseud, " has no tags to show")
@@ -248,7 +256,7 @@ def startProcess(src, uname, pseud, picCodes):
     tops = topTags(newOrder, topNum)
     # topTags needs an answer for if they're all used only once
     printable = tagsNoFreq(tops, src)
-    return printPretty(pseud, printable)
+    return printPretty(pseud, printable, src)
 
 def main():
     '''
