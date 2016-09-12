@@ -194,18 +194,49 @@ def makeLiveLink(tag, url):
 
 def printPretty(pseud, tagList):
     if len(tagList) > 0:
+        toPrint = pseud + "'s " + len(tagList) + " Most Frequently Used Tags:"
         print(pseud, "'s ", len(tagList), " Most Frequently Used Tags: ")
         tagpile = ""
         for tag in tagList:
             tagpile += tag
             tagpile += ", "
         tagpile = tagpile[:len(tagpile)-2]
+        toPrint += "\n" + tagpile
         print(tagpile)
+        return toPrint
     else:
+        toPrint = pseud + " has no tags to show"
         print(pseud, " has no tags to show")
+        return toPrint
     
+def startProcess(src, uname, pseud, picCodes):
+    if src==False:
+        topNum = 15
+        workPg = getPageAO3(uname, pseud, 1)
+        numPgs = getNumWorksPages(workPg)
+        freeformTags = justTagsAO3(workPg)
+        if numPgs > 1:
+            for pNum in range(2, numPgs+1):
+                currPg = getPageAO3(uname, pseud, pNum)
+                freeformTags += justTagsAO3(currPg)
+    else:
+        topNum = 5
+        picPage = getPageInsta(uname)
+        commentTags = getCommentTags(picPage)
+        #use picCodes to shortcut here!!!!!
+        freeformTags = justTagsInst(picPage)
+        freeformTags = commentTags + freeformTags  # should re-name this variable later
+
+    tagsUsed = tagDict(freeformTags)
+    newOrder = sorted([(value, key) for (key, value) in tagsUsed.items()],
+                      reverse=True)  # http://stackoverflow.com/questions/613183/sort-a-python-dictionary-by-value
+    tops = topTags(newOrder, topNum)
+    # topTags needs an answer for if they're all used only once
+    printable = tagsNoFreq(tops, src)
+    return printPretty(pseud, printable)
 
 def main():
+    '''
     src = input("Would you like to work with AO3 or instagram? ")
     pseud = ""
     if src == "AO3":
@@ -235,8 +266,8 @@ def main():
     printable = tagsNoFreq(tops, src)
     printPretty(pseud, printable)
     
-
-
+    #commented out becase it's happening in the other function now
+    '''
 
 
 
