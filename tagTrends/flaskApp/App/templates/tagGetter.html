@@ -22,10 +22,10 @@
     {{form.picCodes}}</p>
     <p><input type="submit" value="Get Tags"></p>
     <p id="tagResults">
-        {% for response in tagResponse %}
-        {{response}}
+        {% for part in tagResponse %}
+            {{part|safe}}
         {% endfor %}
-    </p>
+           </p>
 
 </form>
 {% endblock %}

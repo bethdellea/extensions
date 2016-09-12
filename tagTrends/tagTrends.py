@@ -215,7 +215,7 @@ def printPretty(pseud, tagList, src):
         toPrint = pseud + "'s " + str(len(tagList)) + " Most Frequently Used Tags: <br>"
         willPrint=[toPrint]
         #print(pseud, "'s ", str(len(tagList)), " Most Frequently Used Tags: ")
-        tagpile = ""
+        tagpile = []
         for tag in tagList:
             if src:
                 linkTxt = makeTagLinkInsta(tag)
@@ -224,11 +224,10 @@ def printPretty(pseud, tagList, src):
             else:
                 linkTxt = makeTagLinkAO3(tag)
                 link = makeLiveLink(tag, linkTxt)
-            tagpile += link
-            tagpile += ", "
-        tagpile = tagpile[:len(tagpile)-2] #don't remember why the -2 anymore. (shrug dude)
+            tagpile.append(link)
+            tagpile.append(", ")
+        tagpile = tagpile[:len(tagpile)-1] #take off that last comma space
         willPrint += tagpile
-        print(tagpile)
         return willPrint
     else:
         toPrint = pseud + " has no tags to show"
