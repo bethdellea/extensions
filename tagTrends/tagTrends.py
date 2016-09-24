@@ -230,8 +230,7 @@ def printPretty(pseud, tagList, src):
         willPrint += tagpile
         return willPrint
     else:
-        toPrint = pseud + " has no tags to show"
-        print(pseud, " has no tags to show")
+        toPrint = [pseud, " has no tags to show."]
         return toPrint
     
 def startProcess(src, uname, pseud, picCodes):
@@ -253,7 +252,11 @@ def startProcess(src, uname, pseud, picCodes):
     newOrder = sorted([(value, key) for (key, value) in tagsUsed.items()],
                       reverse=True)  # http://stackoverflow.com/questions/613183/sort-a-python-dictionary-by-value
     tops = topTags(newOrder, topNum)
-    # topTags needs an answer for if they're all used only once
+
+    if(len(newOrder) >= 1): #can't go snooping if they've got no tags though
+        if (newOrder[0][0] <= 2):  #if the most frequently used tag is used twice or fewer times, there are no trends to show
+            output = [pseud, " uses no tags more than others."]
+            return output
     printable = tagsNoFreq(tops, src)
     return printPretty(pseud, printable, src)
 
