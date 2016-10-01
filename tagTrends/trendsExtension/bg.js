@@ -1,10 +1,8 @@
 //chrome.tabs.executeScript({ file: 'jquery-2.1.3.js'}); 
-document.getElementById('GNsubmit').addEventListener('click', neutralize);
+//document.getElementById('GNsubmit').addEventListener('click', neutralize);
 
-//$("#GNsubmit").click(function( event ){
-    //event.preventDefault();
     
-    
+/*    
 function neutralize(){
     var pro = $('input[name=pronoun]:checked', '#choosePls').val(); 
     console.log(pro);
@@ -32,4 +30,4 @@ function neutralize(){
     
     
 };
-         
+*/
