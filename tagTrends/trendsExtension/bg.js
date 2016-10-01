@@ -1,6 +1,11 @@
 //chrome.tabs.executeScript({ file: 'jquery-2.1.3.js'}); 
 //document.getElementById('GNsubmit').addEventListener('click', neutralize);
 
+//if we're on AO3 author page or IG user page (@ in the title of the page, along wiht url check)
+//run the code --- if ig, get pic codes first, if AO3 just get uname and pseud
+
+
+
     
 /*    
 function neutralize(){
