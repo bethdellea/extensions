@@ -15,10 +15,17 @@ function getTagsI(){
 }
 
 function checkUrl(urlIn){
-    //RE with urlIn to check for A or I
-    var urlPieces = urlIn.split("/");
-    
-    console.log(urlPieces);
+    //is archiveofourown or instagram in it
+    var ansA = urlIn.indexOf("archiveofourown");
+    var ansI = urlIn.indexOf("instagram");
+    if(ansA != -1){
+        console.log("A is a go");
+        getTagsA();
+    }
+    if(ansI != -1){
+        console.log("I is a go");
+        getTagsI();
+    }
 }
 
  var query = {active: true, currentWindow: true};
