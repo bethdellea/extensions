@@ -1,4 +1,3 @@
-chrome.tabs.executeScript({ file: 'jquery-2.1.3.js'}); 
 //document.getElementById('GNsubmit').addEventListener('click', neutralize);
 
 //if we're on AO3 author page or IG user page (@ in the title of the page, along wiht url check)
@@ -28,17 +27,20 @@ function checkUrl(urlIn){
     }
 }
 
- var query = {active: true, currentWindow: true};
+ 
 function callback(tabs){
     var currentTab = tabs[0];
     var currURL = currentTab.url;
-    var curr = checkUrl(currURL);
-    if( curr == "a"){
-        getTagsA();
-    }
-    if(curr == "i"){
-        getTagsI();
+    checkUrl(currURL);
+    
+}
+
+function askTabs(tab){
+    if (tab.status == "complete"){
+    var query = {'active': true, 'currentWindow': true};
+
+    chrome.tabs.query(query, callback);
     }
 }
 
-chrome.tabs.query(query, callback);
+chrome.tabs.onUpdated.addListener(askTabs);

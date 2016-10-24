@@ -15,11 +15,8 @@
              //"48" : "icon48.png"},
    
 "content_scripts": [ {
-    "js": [ "jquery-2.1.3.js"],
-    "matches": [ "http://*/*", "https://*/*"]  
-  }],
-"background": {
-    "scripts": ["t.js"],    //t.js needs to bbe renamed
-    "persistent": false     //I forget what persistent means but it could be useful
-  }
+    "js": [ "jquery-2.1.3.js", "bg.js"],
+    "matches": [ "http://*/*", "https://*/*"] ,
+    "run_at": "document_end"
+  }]
 }

@@ -6,4 +6,8 @@
 //go to http://54.167.162.191/tagApp/tags
 //and put in name and pseud fields
 
-document.body.innerHTML = "SDghdjnxd ";
+
+$(document).ready(function(){
+    $("body").prepend("Hello World (AO3)!");  
+});
+

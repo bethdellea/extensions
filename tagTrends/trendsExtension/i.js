@@ -6,4 +6,9 @@
 //and check instagram box, put NAME in both fields, then add picture codes! (comma sep)
 
 
-document.body.innerHTML = "AGHIDFBDXKC";
+
+
+$(document).ready(function(){
+    $("body").prepend("Hello World (Insta)!");  
+});
+
