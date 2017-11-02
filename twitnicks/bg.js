@@ -1,16 +1,16 @@
 //chrome.tabs.executeScript({ file: 'jquery-2.1.3.js'}); 
-document.getElementById('addFields').addEventListener('click', addFields);
+//document.getElementById('addFields').addEventListener('click', addFields);
 
  function addFields(){
-	$fieldHTML = "<div class='row'>
-					<input type='text' name='handle' placeholder='username'>&emsp;&emsp;<input type='text' name='nick' placeholder='nickname'> &emsp;&emsp;&emsp; <a href='javascript();' class='remRow' onclick='remFields(this);'>x</a>
-                </div> <!-- row -->";
-	$("#formFields").append($fieldHTML);
+	var fieldHTML = "<div class='row'>";
+	fieldHTML += "<span class='pre'>@</span><input type='text' name='handle' placeholder='username'>&emsp;&emsp;&mdash;&gt;&emsp;&emsp;<input type='text' name='nick' placeholder='nickname'> &emsp;&emsp;&emsp;";
+	fieldHTML += "<a href='#' class='remRow' onclick='remFields(this);'>x</a> </div> <!-- row -->";
+	$("#formFields").append(fieldHTML);
  
  }
  
- function remFields(fieldRow){
-		fieldRow.remove();
+ function remFields(fieldX){
+		$(fieldX).parent().remove();
  }
   
   function saveAssoc(){
@@ -19,20 +19,25 @@ document.getElementById('addFields').addEventListener('click', addFields);
 	$(".row").each(function(){
 		//TODO: clean input at least a little before you store -- probably simplest to just restrict it to twitter-accepted username charas and 
 					//numbers + letters for username and nickname, respectively for v1
-		var uname = $(this).find("handle").val();
-		var nickname = $(this).find("nick").val();
-		nickPairs[uname] = nickname;
+		var uname = $(this).find("input[name='handle']").val();
+		var nickname = $(this).find("input[name='nick']").val();
+		if(uname.length && nickname.length){
+			nickPairs[uname] = nickname;
+		}
 	});
-	
-	if(nickPairs.length){
+	if(!$.isEmptyObject(nickPairs)){//nickPairs.length){
 		//if we have entered data, save it!!
-		chrome.storage.sync.set({"twitNicData": nickPairs});
+		//chrome.storage.sync.set({"twitNicData": nickPairs});
+		//console.log("twitNicData:: " + nickPairs);
 	} else{
-			chrome.storage.sync.set({"twitNicData": "n/a"});	
+			//chrome.storage.sync.set({"twitNicData": "n/a"});	
+			//console.log("twitNicData: n/a");
 		}
   
   }
   
+  //other TODO: give option (somewhere) to save and load to .txt/.csv/whatever files for folks with lots who don't want to re-enter on cleared data
+  //still later TODO: on export, allow user to select which ones get saved/exported (import should add saved assoc, not overwrite entire list)
   
 function neutralize(){
     var pro = $('input[name=pronoun]:checked', '#choosePls').val(); 

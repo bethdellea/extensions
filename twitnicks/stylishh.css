@@ -1,18 +1,68 @@
 body{
-    background: -webkit-linear-gradient(left, rgba(220,103,204,.6) , rgba(163,209,255,.6)); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(right, rgba(255,103,204,.6),rgba(163,209,255,.6)); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(right, rgba(255,103,204,.6),rgba(163,209,255,.6)); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(to right, rgba(255,103,204,.6) ,rgba(163,209,255,.6)); /* Standard syntax */
+  /*  background: -webkit-linear-gradient(left, rgba(220,103,204,.6) , rgba(163,209,255,.6)); /* For Safari 5.1 to 6.0 */
+  /*  background: -o-linear-gradient(right, rgba(255,103,204,.6),rgba(163,209,255,.6)); /* For Opera 11.1 to 12.0 */
+  /*  background: -moz-linear-gradient(right, rgba(255,103,204,.6),rgba(163,209,255,.6)); /* For Firefox 3.6 to 15 */
+  /*  background: linear-gradient(to right, rgba(255,103,204,.6) ,rgba(163,209,255,.6)); /* Standard syntax */ 
+    background: rgba(243,245,115, .26);
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
+	font-family: Raleway, sans-serif;
+}
+
+h2{
+	color: #46818a;
+}
+
+a{
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 1.5em;
+}
+
+a.add{
+	color:  #ed8c06;
+	font-size: 5em;
+	float: left;
+	clear: left;
+}
+a.add:hover, a.add:active{
+	color: #358c06;
+}
+
+a.remRow{
+	color: #23ab94;
+	position: relative;
+	top: 3px;
+}
+a.remRow:hover, a.remRow:active{
+	color: #234494;
+}
+
+.row{
+	margin: 0em 1em;
+	padding: 1em;
+}
+
+.pre{
+	margin-right: .5em;
+	color: #555;
+	font-weight: bold;
+	padding-bottom: 3px;
+	font-family: cursive;
 }
 
 .content{
     padding: 1em;
 }
 
+#adminRow{
+	margin-top: -1.75em;
+}
 
-#submit{
-    padding: 4.3px;   
+#TNsubmit{
+    padding: 4.3px; 
+	margin-top: 2.3em;
+	margin-left: 3em;
+	float: left;
 }
