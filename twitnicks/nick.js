@@ -21,7 +21,7 @@ chrome.storage.sync.get("twitNicData", function (nicArray) {
 	}
 });
 
-if(nicks.length){
+if(!$.isEmptyObject(nickPairs)){
 	//do replacement things,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
 

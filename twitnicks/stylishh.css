@@ -14,28 +14,29 @@ h2{
 	color: #46818a;
 }
 
-a{
+a, span.but{
 	text-decoration: none;
 	font-weight: bold;
 	font-size: 1.5em;
+	cursor: pointer;
 }
 
-a.add{
+span.add{
 	color:  #ed8c06;
 	font-size: 5em;
 	float: left;
 	clear: left;
 }
-a.add:hover, a.add:active{
+span.add:hover, span.add:active{
 	color: #358c06;
 }
 
-a.remRow{
+span.remRow{
 	color: #23ab94;
 	position: relative;
 	top: 3px;
 }
-a.remRow:hover, a.remRow:active{
+span.remRow:hover, span.remRow:active{
 	color: #234494;
 }
 
@@ -49,7 +50,7 @@ a.remRow:hover, a.remRow:active{
 	color: #555;
 	font-weight: bold;
 	padding-bottom: 3px;
-	font-family: cursive;
+	/*font-family: cursive;*/
 }
 
 .content{

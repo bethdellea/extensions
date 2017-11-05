@@ -1,10 +1,15 @@
 //chrome.tabs.executeScript({ file: 'jquery-2.1.3.js'}); 
 //document.getElementById('addFields').addEventListener('click', addFields);
 
- function addFields(){
+$(document).ready(function(){
+	popFields();
+});
+
+ function addFields(handle = '', nick = ''){
 	var fieldHTML = "<div class='row'>";
-	fieldHTML += "<span class='pre'>@</span><input type='text' name='handle' placeholder='username'>&emsp;&emsp;&mdash;&gt;&emsp;&emsp;<input type='text' name='nick' placeholder='nickname'> &emsp;&emsp;&emsp;";
-	fieldHTML += "<a href='#' class='remRow' onclick='remFields(this);'>x</a> </div> <!-- row -->";
+	fieldHTML += "<span class='pre'>@</span><input type='text' name='handle' value='"+handle+"' placeholder='username'>&emsp;&emsp;&mdash;&gt;&emsp;&emsp;";
+	fieldHTML += "<input type='text' name='nick' placeholder='nickname' value='"+nick+"'> &emsp;&emsp;&emsp;";
+	fieldHTML += "<span class='but remRow' onclick='remFields(this);'>x</span> </div> <!-- row -->";
 	$("#formFields").append(fieldHTML);
  
  }
@@ -12,6 +17,20 @@
  function remFields(fieldX){
 		$(fieldX).parent().remove();
  }
+  
+ function popFields(){
+	var nickPairs = JSON.parse(localStorage.getItem("twitNicData"));
+	//var nicks = {};
+	if(!$.isEmptyObject(nickPairs)){
+		$.each(nickPairs, function(username, nickname){
+			//nicks[username] = nickname;
+			addFields(username, nickname);
+		});
+	}
+ 
+ 
+ }
+  
   
   function saveAssoc(){
 	//save username + nickname pairs in local storage, nick.js will pull from local storage to set up dict of needed pairs, etc etc
@@ -26,8 +45,9 @@
 		}
 	});
 	if(!$.isEmptyObject(nickPairs)){//nickPairs.length){
+		localStorage.setItem("twitNicData", JSON.stringify(nickPairs));  //firefox version
 		//if we have entered data, save it!!
-		//chrome.storage.sync.set({"twitNicData": nickPairs});
+		//chrome.storage.sync.set({"twitNicData": JSON.stringify(nickPairs)});
 		//console.log("twitNicData:: " + nickPairs);
 	} else{
 			//chrome.storage.sync.set({"twitNicData": "n/a"});	
