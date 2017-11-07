@@ -4,3 +4,4 @@ Featuring:
 - Emotional First Aid eventually
 - A list of things to do instead of staring at social media sites
 - A recent tags collection for taggable sites
+- The ability to assign nicknames for specific twitter @ handles
