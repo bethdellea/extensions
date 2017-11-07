@@ -1,8 +1,8 @@
 {
-  "manifest_version": 1,
+  "manifest_version": 2,
   "name": "Twit Nicknamer",
   "version": "0.0.1",
-  "description": Lets you nickname twitter users.",
+  "description": "Lets you nickname twitter users.",
     
   "permissions": ["activeTab", "https://*.google.com/", "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js", "storage", "tabs"],
   "browser_action": {
@@ -15,11 +15,7 @@
              "48" : "icon48.png"},
    
 "content_scripts": [ {
-    "js": [ "jquery-2.1.3.js"],
-    "matches": [ "http://*/*", "https://*/*"]
-  }],
-"background": {
-    "scripts": ["nick.js"],
-    "persistent": false    
-  }
+    "js": [ "jquery-2.1.3.js", "nick.js"],
+    "matches": [ "http://*.twitter.com/*", "https://*.twitter.com/*", "https://twitter.com/*", "http://twitter.com/*"]
+  }]
 }
