@@ -1,5 +1,9 @@
 var currTab = window.location.href;
-console.log(currTab);
+var isTweetdeck = false;
+if(currTab.search("tweetdeck") != -1){
+    isTweetdeck = true;
+}
+
 //do need to set things up to also run on page loads/document changes, since twitter likes to ajax things in and also because it's good to cover bases
   
   
@@ -25,7 +29,12 @@ function sortOutTweets(nick, handle){
     handle = "@" + handle;
     $("div.tweet").each(function(){
         if(!$(this).hasClass("nickProcessed")){
-            var tweetAuth = $(".account-group .username", this).text();
+            var tweetAuth = "no one yet";
+            if(!isTweetdeck){
+                tweetAuth = $(".account-group .username", this).text();
+            } else{
+                tweetAuth = $(".account-inline .username", this).text();
+            }
             if(tweetAuth == handle){
                 var dispName = $(".fullname",this).text();
                 dispName += " (" + nick +")";
@@ -47,5 +56,22 @@ function DOMModificationHandler(){
     },2000);
 }
 
-//after document-load
-$('#page-container').bind('DOMSubtreeModified',DOMModificationHandler);
+function DOMModificationHandlerTD(){
+    $(this).unbind('DOMSubtreeModified');
+    setTimeout(function(){
+        getNicks();
+        $('.js-column').bind('DOMSubtreeModified',DOMModificationHandler);
+    },2000);
+}
+
+
+
+$(document).ready(function(){
+
+
+    //after document-load
+    $('#page-container').bind('DOMSubtreeModified',DOMModificationHandler);
+    if(isTweetdeck){
+        $('.scroll-v').bind('DOMSubtreeModified',DOMModificationHandlerTD);
+    }
+});
