@@ -5,6 +5,12 @@ document.getElementById('TNsubmit').addEventListener('click', saveAssoc);
 
 $(document).ready(function(){
 	popFields();
+    jQuery(document).on('keydown', 'input.nickField', function(ev) {
+        if(ev.keyCode == 13){
+            console.log("enter processed");
+            $('#TNsubmit').click();
+        }
+    });
 });
 
  function addFields(twithandle = '', nick = ''){
@@ -12,8 +18,8 @@ $(document).ready(function(){
 		twithandle = '';
 	}
 	var fieldHTML = "<div class='row'>";
-	fieldHTML += "<span class='pre'>@</span><input type='text' name='handle' value='"+twithandle+"' placeholder='username'>&emsp;&emsp;&mdash;&gt;&emsp;&emsp;";
-	fieldHTML += "<input type='text' name='nick' placeholder='nickname' value='"+nick+"'> &emsp;&emsp;";
+	fieldHTML += "<span class='pre'>@</span><input type='text' name='handle' class='handleField' value='"+twithandle+"' placeholder='username'>&emsp;&emsp;&mdash;&gt;&emsp;&emsp;";
+	fieldHTML += "<input type='text' name='nick' placeholder='nickname' value='"+nick+"' class='nickField'> &emsp;&emsp;";
 	fieldHTML += "<span class='but remRow' id='remRow' onclick='remFields(this);'>x</span> </div> <!-- row -->";
 	$("#formFields").append(fieldHTML);
  
@@ -39,6 +45,7 @@ $(document).ready(function(){
   
   function saveAssoc(){
 	//save username + nickname pairs in local storage, nick.js will pull from local storage to set up dict of needed pairs, etc etc
+    hideConfirm();
 	var nickPairs = {};
 	$(".row").each(function(){
 		//TODO: clean input at least a little before you store -- probably simplest to just restrict it to twitter-accepted username charas and 
@@ -53,6 +60,7 @@ $(document).ready(function(){
 		localStorage.setItem("twitNicData", JSON.stringify(nickPairs));  //firefox version
 		//if we have entered data, save it!!
 		chrome.storage.sync.set({"twitNicData": JSON.stringify(nickPairs)});
+        showConfirm();
 		//console.log("twitNicData:: " + nickPairs);
 	} else{
 			//chrome.storage.sync.set({"twitNicData": "n/a"});	
@@ -91,4 +99,14 @@ function neutralize(){
     
     
 };
-         
+
+function showConfirm(){
+    $(".confirm").fadeIn("slow", function(){
+        $(this).fadeOut("slow");
+    });
+}
+       
+function hideConfirm(){
+    $(".confirm").fadeOut("slow");
+}
+

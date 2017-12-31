@@ -44,7 +44,7 @@ function DOMModificationHandler(){
     setTimeout(function(){
         getNicks();
         $('#page-container').bind('DOMSubtreeModified',DOMModificationHandler);
-    },2500);
+    },2000);
 }
 
 //after document-load

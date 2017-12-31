@@ -76,3 +76,13 @@ span.remRow:hover, span.remRow:active{
 	margin-right: 3em;
 	float: right;
 }
+
+span.confirm{
+    color: rgba(0,0,0,.8);
+    clear: both;
+    float: right;
+    margin-top: -35px;
+    margin-bottom: 5px;
+    margin-right: 8em;
+    display: none;
+}
